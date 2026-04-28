@@ -1,36 +1,61 @@
-/**
- * TicTacToe
- * UC4 converts a user-entered slot number (1-9) into corresponding
- * row and column indices of a 2D array.
- */
-public class tictactoeUC4{
+import java.util.Random;
+import java.util.Scanner;
 
-    /**
-     * Entry point of the program. Demonstrates slot-to-index conversion
-     * using a sample slot value.
-     */
+public class tictactoeUC4 {
+    static char player1Symbol;
+    static char player2Symbol;
+    static String currentPlayer;
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        int slot = 7;
+        char[][] board = new char[3][3];
 
-        System.out.println("Row: " + getRowFromSlot(slot));
-        System.out.println("Column: " + getColFromSlot(slot));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = '-';
+            }
+        }
+
+        performToss();
+        displayBoard(board);
+
+        int slot = getSlotInput();
+        
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
+
+        System.out.println("Slot " + slot + " maps to: Row " + row + ", Column " + col);
     }
 
-    /**
-     * Converts slot number into row index using zero-based indexing.
-     * Input: Slot number (1-9)
-     * Output: Row index (0-2)
-     */
-    static int getRowFromSlot(int slot) {
-        return (slot - 1) / 3;
+    public static int getSlotInput() {
+        System.out.print(currentPlayer + ", enter a slot (1-9): ");
+        return scanner.nextInt();
     }
 
-    /**
-     * Converts slot number into column index using modulo operation.
-     * Input: Slot number (1-9)
-     * Output: Column index (0-2)
-     */
-    static int getColFromSlot(int slot) {
-        return (slot - 1) % 3;
+    public static void performToss() {
+        Random random = new Random();
+        int toss = random.nextInt(2);
+
+        if (toss == 0) {
+            currentPlayer = "Player 1";
+            player1Symbol = 'X';
+            player2Symbol = 'O';
+        } else {
+            currentPlayer = "Player 2";
+            player1Symbol = 'X';
+            player2Symbol = 'O';
+        }
+
+        System.out.println("Toss Result: " + currentPlayer + " starts first.");
+        System.out.println("---------------------------");
+    }
+
+    public static void displayBoard(char[][] board) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
